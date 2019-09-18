@@ -3,8 +3,46 @@
  */
 package lambdaDynamo;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
+
 public class Library {
-    public boolean someLibraryMethod() {
+    private DynamoDB dynamoDb;
+    private String DYNAMODB_TABLE_NAME = "task";
+    private Regions REGION = Regions.US_WEST_2;
+
+    public boolean logMe(Context context) {
+        LambdaLogger logger = context.getLogger();
+        logger.log("This has been logged: " + context.toString());
         return true;
     }
+
+    public Task save(Task task) {
+
+        final AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
+        DynamoDBMapper ddbMapper = new DynamoDBMapper(ddb);
+
+        Task t = new Task(task.getId(), task.getTitle(),
+                task.getDescription(), task.getAssignee(),
+                task.getHistoryList(), task.getUrl());
+
+        ddbMapper.save(t);
+
+        return task;
+    }
 }
+
+
+
