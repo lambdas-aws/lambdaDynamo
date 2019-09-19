@@ -30,7 +30,6 @@ public class Library {
     }
 
     public Task save(Task task) {
-
         final AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
         DynamoDBMapper ddbMapper = new DynamoDBMapper(ddb);
 
@@ -44,7 +43,6 @@ public class Library {
     }
 
     public List<Task> getAllTasks(){
-
         final AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
         DynamoDBMapper ddbMapper = new DynamoDBMapper(ddb);
 
@@ -60,17 +58,16 @@ public class Library {
                 .withFilterExpression("(assignee = :v1)")
                 .withExpressionAttributeValues(eav);
         final AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
+
         DynamoDBMapper ddbMapper = new DynamoDBMapper(ddb);
         List<Task> tasks = ddbMapper.scan(Task.class, scan);
 
         return tasks;
-
     }
 
     public Task deleteTask(Task task){
         final AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
         DynamoDBMapper ddbMapper = new DynamoDBMapper(ddb);
-
         Task t = ddbMapper.load(Task.class, task.getId());
 
         ddbMapper.delete(t);

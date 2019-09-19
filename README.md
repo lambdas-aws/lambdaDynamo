@@ -63,5 +63,6 @@ Challenge by: Codefellows.
 ## Lambda Function list
 ![lambdas](src/main/resources/lambda.png)
 
-
+## API Get route return test
+![get](src/main/resources/get.png)
 
