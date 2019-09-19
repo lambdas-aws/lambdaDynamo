@@ -3,19 +3,19 @@
  */
 package lambdaDynamo;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
-
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
+import java.util.HashMap;
+import java.util.List;
 
 
 public class Library {
@@ -42,6 +42,43 @@ public class Library {
 
         return task;
     }
+
+    public List<Task> getAllTasks(){
+
+        final AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
+        DynamoDBMapper ddbMapper = new DynamoDBMapper(ddb);
+
+        List<Task> tasks = ddbMapper.scan(Task.class, new DynamoDBScanExpression());
+
+        return tasks;
+    }
+
+    public List<Task> getUserTasks(Task task){
+        HashMap<String, AttributeValue> eav = new HashMap<>();
+        eav.put(":v1", new AttributeValue().withS(task.getAssignee()));
+        DynamoDBScanExpression scan = new DynamoDBScanExpression()
+                .withFilterExpression("(assignee = :v1)")
+                .withExpressionAttributeValues(eav);
+        final AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
+        DynamoDBMapper ddbMapper = new DynamoDBMapper(ddb);
+        List<Task> tasks = ddbMapper.scan(Task.class, scan);
+
+        return tasks;
+
+    }
+
+    public Task deleteTask(Task task){
+        final AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
+        DynamoDBMapper ddbMapper = new DynamoDBMapper(ddb);
+
+        Task t = ddbMapper.load(Task.class, task.getId());
+
+        ddbMapper.delete(t);
+
+        return task;
+    }
+
+
 }
 
 

@@ -1,8 +1,9 @@
-# lambdaDynamo
+# lambdaDynamo plus CRUD
 Author: Jack Daniel Kinne.
 Challenge by: Codefellows.
 <!-- Short summary or background information -->
-write a lambda to add records when pictures are added to an S3 bucket.
+- write a lambda to add records when pictures are added to an S3 bucket.
+- write unique functions for FULL crud
 
 ## Challenge
 <!-- Description of the challenge -->
@@ -12,12 +13,17 @@ write a lambda to add records when pictures are added to an S3 bucket.
 - Repeat for “PUT” / update functionality
 - Do NOT handle images at this point.
 - You might want to keep this warm…
+- Get all Tasks
+- Get tasks for a user
+- Create New Task
+- Delete Task
+- Update Task State
+- Change Task Assignee
 ## Approach & Efficiency
 <!-- What approach did you take? Why? What is the Big O space/time for this approach? -->
-- copy task and history models from taskmaster backend.
-- make a function that takes a task as its passed.  
-- save it in the DB. 
-- return task.
+- write functions
+- push into separate lambdas
+- associate lambdas with an api gateway
 
 
 ## credits and contributions
@@ -29,3 +35,33 @@ write a lambda to add records when pictures are added to an S3 bucket.
 - Padmapriya Gannapathi
 - Renee Messick
 - Jack Kinne
+- Marisha Hoza
+- Jane Hur
+
+## test cases
+- unique test for update
+```
+{
+  "id": "463ad2fe-19c7-460b-8f2b-a7b33bf67b68",
+  "title": "wednesdayLambda",
+  "description": "lambda dynamo test",
+  "assignee": "FLUFFY, DESTROYER OF CABINETS"
+}
+```
+- test for create
+```
+{
+  "title": "wednesdayLambda",
+  "description": "lambda dynamo test",
+  "assignee": "FLUFFY, DESTROYER OF CABINETS"
+}
+```
+
+## API Gateway routes
+![api_gateway](src/main/resources/api_gateway.png)
+
+## Lambda Function list
+![lambdas](src/main/resources/lambda.png)
+
+
+
