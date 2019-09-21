@@ -5,8 +5,14 @@ Challenge by: Codefellows.
 - write a lambda to add records when pictures are added to an S3 bucket.
 - write unique functions for FULL crud
 
-## link to frontend:
+## links:
+- front end
 [front_end](http://taskmaster-frontend-jack.s3-website-us-west-2.amazonaws.com/)
+
+- route for get
+[get_all_tasks](https://09i76htrtf.execute-api.us-west-2.amazonaws.com/dev/tasks)
+
+
 
 ## Challenge
 <!-- Description of the challenge -->
