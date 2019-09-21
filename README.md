@@ -69,3 +69,9 @@ Challenge by: Codefellows.
 ## API Get route return test
 ![get](src/main/resources/get.png)
 
+## API get user all tasks return test
+![get](src/main/resources/api-get-test.png)
+
+## user tasks from the frontend test
+![get](src/main/resources/user-tasks.png)
+
